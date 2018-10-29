@@ -1,5 +1,9 @@
 package com.pierceecom.blog;
 
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertEquals;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,10 +13,18 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static org.junit.Assert.*;
+
+import javax.ws.rs.core.MediaType;
+
+import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+
+import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.parsing.Parser;
+import io.restassured.specification.RequestSpecification;
 
 /**
  * TODO, Consider it part of the test to replace HttpURLConnection with better
@@ -24,15 +36,51 @@ public class BlogTestIntegr {
     private static final String POST_1 = "{\"id\":\"1\",\"title\":\"First title\",\"content\":\"First content\"}";
     private static final String POST_2 = "{\"id\":\"2\",\"title\":\"Second title\",\"content\":\"Second content\"}";
     private static final String POSTS_URI = "http://localhost:8080/blog-web/posts/";
+    
+    private static final String BASE_URI = "http://localhost:8080";
+    private static final String BASE_PATH = "blog-web";
+    private static final String POSTS = "posts";
+    
+	private static RequestSpecification rspec;
 
     
     public BlogTestIntegr() {
     }
 
+    @BeforeClass
+    public static void init() {
+    	RestAssured.defaultParser = Parser.JSON;
+
+		RequestSpecBuilder rspecBuilder = new RequestSpecBuilder();
+			rspecBuilder.setBaseUri (BASE_URI);
+			rspecBuilder.setBasePath (BASE_PATH);
+			rspecBuilder.addHeader("Content-Type", MediaType.APPLICATION_JSON);
+			rspecBuilder.addHeader("Accept", MediaType.APPLICATION_JSON);
+
+		rspec = rspecBuilder.build();
+    }
+    
+    
+    @Test
+    public void test_0_letsMakeSureThatRestAssureWorks() {
+    	given()
+    	.spec(rspec)
+    	.get("hello-pierce").
+    		then().
+    			statusCode(200).
+    		and().
+    			body(equalTo("{\"message\":\"Hello Pierce\"}"));
+    }
+    
     @Test
     public void test_1_BlogWithoutPosts() {
-        String output = GET(POSTS_URI, 200);
-        assertEquals("[]", output);
+    	given()
+    	.spec(rspec)
+    	.get(POSTS).
+    		then().
+    			statusCode(200).
+    		and().
+    			body(equalTo("[]"));
     }
 
     @Test
