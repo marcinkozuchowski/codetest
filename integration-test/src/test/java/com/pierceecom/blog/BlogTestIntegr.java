@@ -11,6 +11,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,6 +22,8 @@ import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+
+import com.piercevom.blog.api.dto.Post;
 
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
@@ -72,15 +76,18 @@ public class BlogTestIntegr {
     			body(equalTo("{\"message\":\"Hello Pierce\"}"));
     }
     
-    @Test
+    @SuppressWarnings("unchecked")
+	@Test
     public void test_1_BlogWithoutPosts() {
-    	given()
-    	.spec(rspec)
-    	.get(POSTS).
-    		then().
-    			statusCode(200).
-    		and().
-    			body(equalTo("[]"));
+    	List<Post> outputList = new ArrayList<>();
+    	
+    	outputList = given()
+	    	.spec(rspec)
+	    	.get(POSTS).
+	    		then().statusCode(200).
+	    		and().extract().body().as(outputList.getClass());
+    	
+    	assertEquals(1, outputList.size());
     }
 
     @Test

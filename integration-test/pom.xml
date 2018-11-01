@@ -11,8 +11,48 @@
 
 	<artifactId>integration-test</artifactId>
 	<packaging>jar</packaging>
+	
+	<build>
+		<plugins>
+				<plugin>
+				<groupId>fish.payara.maven.plugins</groupId>
+				<artifactId>payara-micro-maven-plugin</artifactId>
+				<version>1.0.2</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>start</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<useUberJar>false</useUberJar>
+					<payaraVersion>5.183</payaraVersion>
+					<artifactItem>
+						<groupId>fish.payara.extras</groupId>
+						<artifactId>payara-micro</artifactId>
+						<version>5.183</version>
+					</artifactItem>
+					<deployWar>false</deployWar>
 
+					<commandLineOptions>
+						<option>
+							<key>--deploy</key>
+							<value>${basedir}\..\blog-web\target\blog-web.war</value>
+						</option>
+					</commandLineOptions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
 	<dependencies>
+
+		<dependency>
+			<groupId>com.pierceecom.sample</groupId>
+			<artifactId>api</artifactId>
+			<scope>test</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>io.rest-assured</groupId>
@@ -20,10 +60,17 @@
 			<version>3.0.0</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.6.2</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -33,7 +80,7 @@
 			<version>3.7</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
