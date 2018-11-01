@@ -82,9 +82,10 @@
 	</build>
 
 	<modules>
-		<module>blog-web</module>
-		<module>integration-test</module>
 		<module>api</module>
+		<module>entities</module>
+		<module>blog-web</module>
+<!-- 		<module>integration-test</module> -->
 	</modules>
 
 </project>

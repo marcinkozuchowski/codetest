@@ -3,10 +3,10 @@ package com.piercevom.blog.api.dto;
 /**
  * Class representing a simple (blog's) post 
  */
-public class Post {
+public class PostDto {
 
 	/** Unique identifier. */
-	private Integer id;
+	private String id;
 
 	/** Title. */
 	private String title;
@@ -15,17 +15,17 @@ public class Post {
 	private String content;
 	
 
-	public Post(int id, String title, String content) {
+	public PostDto(String id, String title, String content) {
 		this.id = id;
 		this.title = title;
 		this.content = content;
 	}
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

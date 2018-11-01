@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<web-app version="4.0"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee">
+
+
+	<session-config>
+		<session-timeout>30 </session-timeout>
+	</session-config>
+
+	<data-source>
+
+		<name>java:global/jdbc/test</name>
+		<class-name>org.h2.jdbcx.JdbcDataSource</class-name>
+		<url>jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS blog;</url>
+		<user>sa</user>
+		<password>sa</password>
+	</data-source>
+
+</web-app>

@@ -3,6 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	
 	<parent>
 		<artifactId>codetest</artifactId>
 		<groupId>com.pierceecom.sample</groupId>
@@ -18,6 +19,12 @@
 		<dependency>
 			<groupId>com.pierceecom.sample</groupId>
 			<artifactId>api</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.pierceecom.sample</groupId>
+			<artifactId>entities</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 
 		<dependency>
@@ -54,44 +61,6 @@
 				<version>${maven.war.plugin.version}</version>
 				<configuration>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>fish.payara.maven.plugins</groupId>
-				<artifactId>payara-micro-maven-plugin</artifactId>
-				<version>1.0.2</version>
-				<executions>
-					<execution>
-						<goals>
-<!-- 							<goal>bundle</goal> -->
-							<goal>start</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<useUberJar>false</useUberJar>
-<!-- 					<daemon>true</daemon> -->
-<!-- 					<immediateExit>false</immediateExit> -->
-<!-- 					<payaraMicroAbsolutePath>c:/opt/payara5/payara-micro-5.183.jar</payaraMicroAbsolutePath> -->
-					<payaraVersion>5.183</payaraVersion>
-					<artifactItem>
-						<groupId>fish.payara.extras</groupId>
-						<artifactId>payara-micro</artifactId>
-						<version>5.183</version>
-					</artifactItem>
-					<deployWar>true</deployWar>
-
-					<commandLineOptions>
-						<option>
-							<key>--deploy</key>
-							<value>c:\data\workspace\github\codetest\blog-web\target\blog-web.war</value>
-						</option>
-						<option>
-							<key>--autobindhttp</key>
-							<value>true</value>
-						</option>
-					</commandLineOptions>
 				</configuration>
 			</plugin>
 		</plugins>

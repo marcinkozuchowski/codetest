@@ -23,7 +23,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import com.piercevom.blog.api.dto.Post;
+import com.piercevom.blog.api.dto.PostDto;
 
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
@@ -79,7 +79,7 @@ public class BlogTestIntegr {
     @SuppressWarnings("unchecked")
 	@Test
     public void test_1_BlogWithoutPosts() {
-    	List<Post> outputList = new ArrayList<>();
+    	List<PostDto> outputList = new ArrayList<>();
     	
     	outputList = given()
 	    	.spec(rspec)
