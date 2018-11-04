@@ -2,14 +2,19 @@ package com.piercescom.blog.entitie;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(schema = "blog")
+@SequenceGenerator(name="post_sequence", schema = "blog", sequenceName = "post_id_seq", allocationSize = 1)
 public class Post {
 
 	@Id
+	@GeneratedValue(generator = "post_sequence", strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
 	@Column(nullable = false)

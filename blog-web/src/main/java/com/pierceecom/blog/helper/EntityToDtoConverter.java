@@ -8,7 +8,11 @@ import com.piercevom.blog.api.dto.PostDto;
 
 public class EntityToDtoConverter {
 
-	public static PostDto convert(Post post) {
+	private EntityToDtoConverter () {
+		
+	}
+	
+	public static PostDto convertEntity(Post post) {
 		PostDto postDto = null;
 		if (post != null) {
 			postDto = new PostDto(post.getId().toString(), post.getTitle(), post.getContent()); 
@@ -20,10 +24,22 @@ public class EntityToDtoConverter {
 	public static java.util.List<PostDto> convert(List<Post> posts) {
 		List<PostDto> result = new ArrayList<>();
 		for (Post post : posts) {
-			result.add(convert(post));
+			result.add(convertEntity(post));
 		}
 		
 		return result;
+	}
+
+	public static Post convertDto(PostDto postDto) {
+		Post post = null;
+		if (postDto != null) {
+			post = new Post(); 
+			post.setId(postDto.getId() != null ? Long.valueOf(postDto.getId()) : null);
+			post.setTitle(postDto.getTitle());
+			post.setContent(postDto.getContent());
+		}
+		
+		return post;
 	}
 	
 }

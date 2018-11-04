@@ -1,20 +1,32 @@
 package com.piercevom.blog.api.dto;
 
+import java.util.Objects;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Class representing a simple (blog's) post 
  */
+@XmlRootElement
 public class PostDto {
 
 	/** Unique identifier. */
 	private String id;
 
 	/** Title. */
+	@NotBlank(message="{title.NotBlank.message}")
+	@Size(max=255)
 	private String title;
 
 	/** Some awesome content. */
+	@NotBlank(message="{content.NotBlank.message}")
 	private String content;
 	
-
+	public PostDto() {
+	}
+	
 	public PostDto(String id, String title, String content) {
 		this.id = id;
 		this.title = title;
@@ -45,6 +57,23 @@ public class PostDto {
 		this.content = content;
 	}
 
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+	        return true;
+		}
+
+		if (obj == null || getClass() != obj.getClass()) {
+	        return false;
+		}
+		
+		PostDto post = (PostDto) obj;
+
+		return Objects.equals(id, post.id)
+				&& Objects.equals(title, post.title)
+	            && Objects.equals(content, post.content);
+	}
 	
 	@Override
 	public String toString() {
