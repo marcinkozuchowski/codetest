@@ -6,10 +6,13 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 /**
  * Class representing a simple (blog's) post 
  */
-@XmlRootElement
+@XmlRootElement(name = "Post")
+@JsonPropertyOrder({"id", "title", "content"})
 public class PostDto {
 
 	/** Unique identifier. */

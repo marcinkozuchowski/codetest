@@ -15,7 +15,11 @@ public class EntityToDtoConverter {
 	public static PostDto convertEntity(Post post) {
 		PostDto postDto = null;
 		if (post != null) {
-			postDto = new PostDto(post.getId().toString(), post.getTitle(), post.getContent()); 
+			postDto = new PostDto(
+						(post.getId() != null ? post.getId().toString() : null), 
+						post.getTitle(), 
+						post.getContent()
+					); 
 		}
 		
 		return postDto;

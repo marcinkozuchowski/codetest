@@ -1,7 +1,5 @@
 package com.pierceecom.blog;
 
-import static io.restassured.RestAssured.given;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +9,7 @@ import com.piercevom.blog.api.dto.PostDto;
 import io.restassured.response.Response;
 
 /**
+ * Tests various cases of post edit.
  * 
  * @author marcin.kozuchowski
  *
@@ -22,7 +21,8 @@ public class EditBlogTestIntegr extends AbstractBlogTest {
 	@Before
 	public void prepare() {
 		post = new PostDto(null, "It was awesom saturday", "Some incredible story....");
-		sendAddAndValidateResponse(post);
+		Response response = sendAddPost(post, javax.ws.rs.core.Response.Status.CREATED);
+		post = getPostAfterCreate(post, response, javax.ws.rs.core.Response.Status.OK);
 	}
 
 	/**
@@ -33,7 +33,8 @@ public class EditBlogTestIntegr extends AbstractBlogTest {
 		String newTitle = "It was awesome saturday NIGHT!";
 		post.setTitle(newTitle);
 
-		sendEditAndValidateResponse(post);
+		Response response = sendEdit(post, javax.ws.rs.core.Response.Status.CREATED);
+		getPostAfterCreate(post, response, javax.ws.rs.core.Response.Status.OK);
 	}
 
 	/**
@@ -44,7 +45,8 @@ public class EditBlogTestIntegr extends AbstractBlogTest {
 		String newContent = "Some terible story...";
 		post.setContent(newContent);
 
-		sendEditAndValidateResponse(post);
+		Response response = sendEdit(post, javax.ws.rs.core.Response.Status.CREATED);
+		getPostAfterCreate(post, response, javax.ws.rs.core.Response.Status.OK);
 	}
 
 	/**
@@ -58,7 +60,8 @@ public class EditBlogTestIntegr extends AbstractBlogTest {
 		post.setTitle(newTitle);
 		post.setContent(newContent);
 
-		sendEditAndValidateResponse(post);
+		Response response = sendEdit(post, javax.ws.rs.core.Response.Status.CREATED);
+		getPostAfterCreate(post, response, javax.ws.rs.core.Response.Status.OK);
 	}
 
 	/**
@@ -68,8 +71,7 @@ public class EditBlogTestIntegr extends AbstractBlogTest {
 	public void update_title_empty() {
 		post.setTitle("");
 
-		Response response = given().spec(rspec).body(post).put(TestConstants.POSTS);
-		response.then().statusCode(405);
+		sendEdit(post, javax.ws.rs.core.Response.Status.METHOD_NOT_ALLOWED);
 	}
 
 	/**
@@ -79,8 +81,7 @@ public class EditBlogTestIntegr extends AbstractBlogTest {
 	public void update_title_null() {
 		post.setTitle(null);
 
-		Response response = given().spec(rspec).body(post).put(TestConstants.POSTS);
-		response.then().statusCode(405);
+		sendEdit(post, javax.ws.rs.core.Response.Status.METHOD_NOT_ALLOWED);
 	}
 
 	/**
@@ -90,8 +91,7 @@ public class EditBlogTestIntegr extends AbstractBlogTest {
 	public void update_title_too_long() {
 		post.setTitle(RandomStringUtils.randomAlphabetic(300));
 
-		Response response = given().spec(rspec).body(post).put(TestConstants.POSTS);
-		response.then().statusCode(405);
+		sendEdit(post, javax.ws.rs.core.Response.Status.METHOD_NOT_ALLOWED);
 	}
 
 	/**
@@ -101,8 +101,7 @@ public class EditBlogTestIntegr extends AbstractBlogTest {
 	public void update_content_empty() {
 		post.setContent("");
 
-		Response response = given().spec(rspec).body(post).put(TestConstants.POSTS);
-		response.then().statusCode(405);
+		sendEdit(post, javax.ws.rs.core.Response.Status.METHOD_NOT_ALLOWED);
 	}
 
 	/**
@@ -112,8 +111,7 @@ public class EditBlogTestIntegr extends AbstractBlogTest {
 	public void update_content_null() {
 		post.setContent(null);
 
-		Response response = given().spec(rspec).body(post).put(TestConstants.POSTS);
-		response.then().statusCode(405);
+		sendEdit(post, javax.ws.rs.core.Response.Status.METHOD_NOT_ALLOWED);
 	}
 
 	/**
@@ -123,7 +121,8 @@ public class EditBlogTestIntegr extends AbstractBlogTest {
 	public void update_content_very_long() {
 		post.setContent(RandomStringUtils.randomAlphabetic(10000));
 
-		sendEditAndValidateResponse(post);
+		Response response = sendEdit(post, javax.ws.rs.core.Response.Status.CREATED);
+		getPostAfterCreate(post, response, javax.ws.rs.core.Response.Status.OK);
 	}
 	
 }

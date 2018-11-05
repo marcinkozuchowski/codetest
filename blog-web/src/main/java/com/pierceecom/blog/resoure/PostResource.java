@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -15,6 +16,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -31,10 +33,9 @@ import com.piercevom.blog.api.dto.PostDto;
 
 @Stateless
 @Path("/posts")
-@Produces({ MediaType.APPLICATION_JSON })
-public class PostResourceImpl extends AbstractResource {
+public class PostResource extends AbstractResource {
 
-	private static final Logger logger = LoggerFactory.getLogger(PostResourceImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(PostResource.class);
 	
 	
 	@EJB
@@ -44,13 +45,16 @@ public class PostResourceImpl extends AbstractResource {
 	private Validator validator;
 
 	@GET
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response getAllPosts() {
 		List<PostDto> posts = EntityToDtoConverter.convert(postService.findAll());
 
-		return Response.ok(posts).build();
+		GenericEntity<List<PostDto>> entity = new GenericEntity<List<PostDto>>(posts){};
+		return Response.ok(entity).build();
 	}
 
 	@POST
+	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response publishPost(PostDto post) {
 		Post postEntity = EntityToDtoConverter.convertDto(post);
 		postEntity.setId(null); // ID should be assigned by ORM/DB
@@ -64,6 +68,7 @@ public class PostResourceImpl extends AbstractResource {
 	}
 
 	@PUT
+	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response updatePost(PostDto postDto) {
 		
 		Post post = postService.findById(Long.parseLong(postDto.getId()));
@@ -99,6 +104,7 @@ public class PostResourceImpl extends AbstractResource {
 	}
 
 	@GET
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Path("{id}")
 	public Response getPost(@PathParam("id") String id) {
 		Post post = postService.findById(Long.valueOf(id));
