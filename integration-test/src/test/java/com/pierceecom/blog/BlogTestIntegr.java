@@ -104,6 +104,8 @@ public class BlogTestIntegr extends AbstractBlogTest {
         given().spec(rspec).delete(TestConstants.POSTS_RESOURCE + "/" + post2.getId()).then().statusCode(javax.ws.rs.core.Response.Status.OK.getStatusCode());
         // Should now be gone
         given().spec(rspec).get(TestConstants.POSTS_RESOURCE + "/" + post2.getId()).then().statusCode(javax.ws.rs.core.Response.Status.NO_CONTENT.getStatusCode());
+        
+        given().spec(rspec).delete(TestConstants.POSTS_RESOURCE + "/" + post2.getId()).then().statusCode(javax.ws.rs.core.Response.Status.NOT_FOUND.getStatusCode());
     }
 
     @SuppressWarnings("unchecked")
