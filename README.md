@@ -1,13 +1,12 @@
-#
 
-Build project:
+1. Build project:
     > mvn clean install
-Run server:
+2. Run server:
 	> java -jar  payara-micro-5.183.jar --deploy ${projectHomeDir}/blog-web/target/blog-web.war --logproperties ${projectHomeDir}/etc/logging.properties
-Run tests:
+3. Run tests:
 	> mvn verify -f integration-test
 	
-
-There is also configured (but currently commented) automation for downloading and starting payara, deploying war and running integration tests, just by one command:
-	> mvn verify -f integration-test
-but there has to be some bug in rest-assured or payara-micro-maven-plugin, because when comes to invoking PUT method, program hangs waiting for response to the request.
+================================================================================
+There is also configured (but currently commented) automation for downloading and starting payara, deploying war and running integration tests, just by one command: **_mvn verify -f integration-test_**
+But there has to be some bug in rest-assured or payara-micro-maven-plugin, because when comes to invoking PUT method, program hangs waiting for response to the request.
+================================================================================
