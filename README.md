@@ -7,6 +7,6 @@
 	> mvn verify -f integration-test
 	
 ================================================================================
-There is also configured (but currently commented) automation for downloading and starting payara, deploying war and running integration tests, just by one command: **_mvn verify -f integration-test_**
+There is also configured (but currently commented) automation for downloading and starting payara, deploying war and running integration tests, just by one command: _mvn verify -f integration-test_
 But there has to be some bug in rest-assured or payara-micro-maven-plugin, because when comes to invoking PUT method, program hangs waiting for response to the request.
 ================================================================================
