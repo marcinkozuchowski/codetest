@@ -3,10 +3,13 @@ package com.piercevom.blog.api.dto;
 import java.util.Objects;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.piercevom.blog.api.validation.groups.PostAction;
+import com.piercevom.blog.api.validation.groups.PutAction;
 
 /**
  * Class representing a simple (blog's) post 
@@ -16,15 +19,17 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 public class PostDto {
 
 	/** Unique identifier. */
+	@NotBlank(groups = PutAction.class)
+	@Pattern(regexp = "[0-9]+", groups = PutAction.class)
 	private String id;
 
 	/** Title. */
-	@NotBlank(message="{title.NotBlank.message}")
-	@Size(max=255)
+	@NotBlank(groups = {PutAction.class, PostAction.class})
+	@Size(max=255, groups = {PutAction.class, PostAction.class})
 	private String title;
 
 	/** Some awesome content. */
-	@NotBlank(message="{content.NotBlank.message}")
+	@NotBlank(groups = {PutAction.class, PostAction.class})
 	private String content;
 	
 	public PostDto() {

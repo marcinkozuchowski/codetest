@@ -10,9 +10,9 @@
 	<packaging>pom</packaging>
 
 	<properties>
-	
+
 		<payara.micro.version>5.183</payara.micro.version>
-		
+
 		<!-- General project configuration -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -40,6 +40,18 @@
 				<artifactId>javaee-api</artifactId>
 				<version>7.0</version>
 				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>com.fasterxml.jackson.dataformat</groupId>
+				<artifactId>jackson-dataformat-xml</artifactId>
+				<version>2.9.7</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.7</version>
 			</dependency>
 
 			<dependency>
@@ -85,7 +97,7 @@
 		<module>api</module>
 		<module>entities</module>
 		<module>blog-web</module>
-<!-- 		<module>integration-test</module> -->
+		<!-- <module>integration-test</module> -->
 	</modules>
 
 </project>

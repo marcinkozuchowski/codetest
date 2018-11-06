@@ -1,12 +1,10 @@
 package com.piercescom.blog.entitie.service.impl;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.persistence.Query;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.piercescom.blog.entitie.Post;
 import com.piercescom.blog.entitie.service.PostService;
@@ -14,7 +12,7 @@ import com.piercescom.blog.entitie.service.PostService;
 @Stateless
 public class PostServiceBean extends AbstractService<Post> implements PostService {
 
-	private static final Logger logger = LoggerFactory.getLogger(PostServiceBean.class);
+	private static final Logger LOGGER = Logger.getLogger(PostServiceBean.class.getName());
 
 	public PostServiceBean() {
 		super(Post.class);
@@ -28,29 +26,26 @@ public class PostServiceBean extends AbstractService<Post> implements PostServic
 			return em.createQuery("SELECT p FROM Post p ORDER by p.id ASC").getResultList();
 		
 		} finally {
-			logger.trace("findAll in {} [ms]", (System.currentTimeMillis() - t));
+			LOGGER.finest(() -> "findAll in " + (System.currentTimeMillis() - t) + " [ms]");
 		}
 	}
 	
 	public int deleteById(Long id) {
 		long t = System.currentTimeMillis();
-		int result = 0;
 		try {
 			
 			Query q = em.createQuery("DELETE FROM Post WHERE id = :id");
 			q.setParameter("id", id);
 			
-			result = q.executeUpdate();
-			return result;
-			
+			return q.executeUpdate();
 		} finally {
-			logger.trace("deleteById({}) in {} [ms] with result: {}", id, (System.currentTimeMillis() - t), result);
+			LOGGER.finest(() -> "deleteById(" + id + ") in " + (System.currentTimeMillis() - t) + " [ms] ");
 		}
 	}
 	
 	@Override
 	protected Logger getLogger() {
-		return logger;
+		return LOGGER;
 	}
 	
 }

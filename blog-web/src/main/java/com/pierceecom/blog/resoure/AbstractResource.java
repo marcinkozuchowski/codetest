@@ -5,8 +5,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
-import org.slf4j.Logger;
-
+/**
+ * Some abstract stuff goes hire.
+ * 
+ * @author marcin.kozuchowski
+ *
+ */
 public abstract class AbstractResource {
 
 	@Context
@@ -18,7 +22,5 @@ public abstract class AbstractResource {
 	@Context
 	protected UriInfo uriInfo;
 	
-	
-	protected abstract Logger getLogger();
 	
 }

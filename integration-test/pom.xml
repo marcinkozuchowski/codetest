@@ -13,6 +13,33 @@
 	<packaging>jar</packaging>
 
 	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>${maven.failsafe.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>integration-test</id>
+						<goals>
+							<goal>integration-test</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>verify</id>
+						<goals>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<includes>
+						<include>*.java</include>
+					</includes>
+				</configuration>
+			</plugin>
+		</plugins>
+<!-- 
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -45,31 +72,6 @@
 
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>${maven.failsafe.plugin.version}</version>
-				<executions>
-					<execution>
-						<id>integration-test</id>
-						<goals>
-							<goal>integration-test</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>verify</id>
-						<goals>
-							<goal>verify</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<includes>
-						<include>*.java</include>
-					</includes>
-				</configuration>
-			</plugin>
-
-			<plugin>
 				<groupId>fish.payara.maven.plugins</groupId>
 				<artifactId>payara-micro-maven-plugin</artifactId>
 				<version>${payara.micro.maven.plugin.version}</version>
@@ -88,7 +90,7 @@
 
 							<commandLineOptions>
 								<option>
-									<key>--deploy</key>
+									<key>deploy</key> // I've removed two dashes in order to pom validation errors
 									<value>${basedir}\..\blog-web\target\blog-web.war</value>
 								</option>
 							</commandLineOptions>
@@ -113,8 +115,8 @@
 				</configuration>
 			</plugin>
 		</plugins>
+ -->
 	</build>
-
 	<dependencies>
 
 		<dependency>
@@ -126,7 +128,14 @@
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
-			<version>3.0.0</version>
+			<version>3.2.0</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+			<version>4.4.10</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -139,7 +148,6 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-xml</artifactId>
-			<version>2.9.7</version>
 		</dependency>
 		
 		<dependency>
@@ -157,7 +165,6 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>3.7</version>
 			<scope>test</scope>
 		</dependency>
 

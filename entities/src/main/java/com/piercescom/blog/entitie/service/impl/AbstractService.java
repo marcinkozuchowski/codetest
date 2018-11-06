@@ -1,9 +1,9 @@
 package com.piercescom.blog.entitie.service.impl;
 
+import java.util.logging.Logger;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
-import org.slf4j.Logger;
 
 import com.piercescom.blog.entitie.service.Service;
 
@@ -24,7 +24,7 @@ public abstract class AbstractService<T> implements Service<T> {
 		try {
 			return em.find(this.clazz, id);
 		} finally {
-			getLogger().trace("findById({}) in {} [ms]", id, (System.currentTimeMillis() - t));
+			getLogger().finest(() -> "findById(" + id + ") in " + (System.currentTimeMillis() - t) + " [ms]");
 		}
 	}
 	
@@ -34,7 +34,7 @@ public abstract class AbstractService<T> implements Service<T> {
 		try {
 			em.persist(entity);
 		} finally {
-			getLogger().trace("save in {} [ms]", (System.currentTimeMillis() - t));
+			getLogger().finest(() -> "save in " + (System.currentTimeMillis() - t) + " [ms]");
 		}
 	}
 
@@ -44,7 +44,7 @@ public abstract class AbstractService<T> implements Service<T> {
 		try {
 			return em.merge(entity);
 		} finally {
-			getLogger().trace("update in {} [ms]", (System.currentTimeMillis() - t));
+			getLogger().finest(() -> "update in " + (System.currentTimeMillis() - t) + " [ms]");
 		}
 	}
 
@@ -54,7 +54,7 @@ public abstract class AbstractService<T> implements Service<T> {
 		try {
 			em.remove(entity);
 		} finally {
-			getLogger().trace("delete in {} [ms]", (System.currentTimeMillis() - t));
+			getLogger().finest(() -> "delete in " + (System.currentTimeMillis() - t) + " [ms]");
 		}
 	}
 

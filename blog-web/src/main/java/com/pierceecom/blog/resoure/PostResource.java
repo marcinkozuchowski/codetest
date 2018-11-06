@@ -2,6 +2,7 @@ package com.pierceecom.blog.resoure;
 
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -22,21 +23,27 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.pierceecom.blog.helper.EntityToDtoConverter;
+import com.pierceecom.blog.resource.annotation.EmptyBodyNotAllowed;
+import com.pierceecom.blog.resource.annotation.LogRestData;
 import com.piercescom.blog.entitie.Post;
 import com.piercescom.blog.entitie.service.PostService;
 import com.piercevom.blog.api.dto.PostDto;
+import com.piercevom.blog.api.validation.groups.PostAction;
+import com.piercevom.blog.api.validation.groups.PutAction;
 
-
+/**
+ * Class providing operations to do on Post through REST Service  
+ * @author marcin.kozuchowski
+ *
+ */
 @Stateless
+@LogRestData
 @Path("/posts")
 public class PostResource extends AbstractResource {
 
-	private static final Logger logger = LoggerFactory.getLogger(PostResource.class);
-	
+	private static final Logger LOGGER = Logger.getLogger(PostResource.class.getName());
 	
 	@EJB
 	private PostService postService;
@@ -54,11 +61,15 @@ public class PostResource extends AbstractResource {
 	}
 
 	@POST
+	@EmptyBodyNotAllowed
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response publishPost(PostDto post) {
-		Post postEntity = EntityToDtoConverter.convertDto(post);
-		postEntity.setId(null); // ID should be assigned by ORM/DB
+		if (!validatePost(post, PostAction.class)) {
+			return Response.status(Status.METHOD_NOT_ALLOWED).build();
+		}
+		post.setId(null);// ID should be assigned by ORM/DB
 
+		Post postEntity = EntityToDtoConverter.convertDto(post);
 		postService.save(postEntity);
 
 		UriBuilder builder = uriInfo.getAbsolutePathBuilder();
@@ -68,20 +79,18 @@ public class PostResource extends AbstractResource {
 	}
 
 	@PUT
+	@EmptyBodyNotAllowed
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response updatePost(PostDto postDto) {
+		if (!validatePost(postDto, PutAction.class)) {
+			return Response.status(Status.METHOD_NOT_ALLOWED).build();
+		}
 		
 		Post post = postService.findById(Long.parseLong(postDto.getId()));
-
 		if (post == null) {
 			return Response.status(Status.NOT_FOUND).build();
 		}
 		
-		if (!validatePost(postDto)) {
-			return Response.status(Status.METHOD_NOT_ALLOWED).build();
-		}
-		
-
 		post.setTitle(postDto.getTitle());
 		post.setContent(postDto.getContent());
 		postService.update(post);
@@ -92,17 +101,6 @@ public class PostResource extends AbstractResource {
 		return Response.created(builder.build()).build();
 	}
 	
-	public boolean validatePost(PostDto post) {
-		Set<ConstraintViolation<PostDto>> constraintViolations;
-		if ((constraintViolations = validator.validate(post)).isEmpty()) {
-			return true;
-		} 
-		
-		constraintViolations.forEach(c -> logger.info("{} {} - {}", c.getPropertyPath(), c.getInvalidValue(), c.getMessage()));
-
-		return false;
-	}
-
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Path("{id}")
@@ -130,9 +128,17 @@ public class PostResource extends AbstractResource {
 		return Response.ok().build();
 	}
 
-	@Override
-	protected Logger getLogger() {
-		return logger;
-	}
+	@SuppressWarnings("rawtypes")
+	public boolean validatePost(PostDto post, Class ... constraitGroup) {
+		Set<ConstraintViolation<PostDto>> constraintViolations;
+		if ((constraintViolations = validator.validate(post, constraitGroup)).isEmpty()) {
+			return true;
+		} 
+		
+		// TODO: Same error class with validation message could be returned to REST CLIENT but provided RAML does not requires that.
+		constraintViolations.forEach(c -> LOGGER.warning(() -> c.getPropertyPath() + " " + c.getInvalidValue() + " - " + c.getMessage()));
 
+		return false;
+	}
+	
 }

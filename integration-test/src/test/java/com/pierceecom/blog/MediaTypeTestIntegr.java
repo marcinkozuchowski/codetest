@@ -28,7 +28,7 @@ import io.restassured.response.Response;
  *
  */
 @RunWith(Parameterized.class)
-public class MediaTypeTest extends AbstractBlogTest {
+public class MediaTypeTestIntegr extends AbstractBlogTest {
 
 	@Parameters
 	public static Collection<Object[]> getParameters() {

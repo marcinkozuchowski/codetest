@@ -14,7 +14,7 @@ import io.restassured.response.Response;
  * @author marcin.kozuchowski
  *
  */
-public class EditBlogTestIntegr extends AbstractBlogTest {
+public class EditPostBlogTestIntegr extends AbstractBlogTest {
 
 	private PostDto post;
 
@@ -112,6 +112,34 @@ public class EditBlogTestIntegr extends AbstractBlogTest {
 		post.setContent(null);
 
 		sendEdit(post, javax.ws.rs.core.Response.Status.METHOD_NOT_ALLOWED);
+	}
+	
+	/**
+	 * Send to edit post without id.
+	 */
+	@Test
+	public void send_to_edit_post_without_id() {
+		post.setId(null);
+
+		sendEdit(post, javax.ws.rs.core.Response.Status.METHOD_NOT_ALLOWED);
+	}
+	
+	/**
+	 * Send to edit post with invliad id.
+	 */
+	@Test
+	public void send_to_edit_post_with_invalid_id() {
+		post.setId("qweqwe");
+
+		sendEdit(post, javax.ws.rs.core.Response.Status.METHOD_NOT_ALLOWED);
+	}
+	
+	/**
+	 * Edit the post without id.
+	 */
+	@Test
+	public void send_to_edit_empty_post() {
+		sendEdit(null, javax.ws.rs.core.Response.Status.METHOD_NOT_ALLOWED);
 	}
 
 	/**

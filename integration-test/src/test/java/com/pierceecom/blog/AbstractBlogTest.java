@@ -49,7 +49,11 @@ public class AbstractBlogTest {
 	protected Response sendAddPost(PostDto post, javax.ws.rs.core.Response.Status expectedStatus, Header ... headers) {
 		RequestSpecification builder = buildSpecWithHeaders(headers);
     	
-    	Response response = builder.body(post).post(TestConstants.POSTS_RESOURCE);
+		if (post != null) {
+			builder.body(post);
+		}
+		
+    	Response response = builder.post(TestConstants.POSTS_RESOURCE);
     	response.then().statusCode(expectedStatus.getStatusCode());
 
     	return response;
@@ -63,8 +67,12 @@ public class AbstractBlogTest {
 	 */
 	protected Response sendEdit(PostDto post, javax.ws.rs.core.Response.Status expectedStatus, Header ... headers) {
 		RequestSpecification builder = buildSpecWithHeaders(headers);
-
-    	Response response = builder.body(post).put(TestConstants.POSTS_RESOURCE);
+		
+		if (post != null) {
+			builder.body(post);
+		}
+		
+    	Response response = builder.put(TestConstants.POSTS_RESOURCE);
     	response.then().statusCode(expectedStatus.getStatusCode());
     	
     	return response;
