@@ -1,52 +1,54 @@
-
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html>
-
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Blog page sandbox</title>
-
-<script src="js/jquery-3.3.1.min.js"></script>
-<link rel="stylesheet" type="text/css" media="all" href="css/styles.css">
-<script>
-</script>
-
-</head>
-
-<body>
-
-<div class="form-style-6">
-<h1>Write a new post</h1>
-<form id = "submitPostForm">
-<input type="text" name="title" placeholder="Post title" />
-<textarea name="content" placeholder="Post content"></textarea>
-<input type="button" value="Publish" id="publishButton"/>
-</form>
-</div>
-        
-<script type="text/javascript">
-	
-	var posting = $.get('service/posts', null, null, 'json');
-	console.log(posting);
-	
-	$( "#publishButton" ).click(function () {
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blog page sandbox!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<script src="js/jquery-3.3.1.js"></script>
+	<script src="js/blog.js"></script>
+  </head>
+  <body onload="init();">
+	<section class="section">
+    <div class="container is-fluid">
+      
+		<div class="tile is-ancestor">
+		  <div class="tile is-parent is-vertical is-3">			
+			  <div class="tile is-child is-vertical">
+				<article class="is-child notification" id="submit-post-form">
+				  <div class="field">
+						<label class="label">Title</label>
+						<div class="control">
+							<input class="input" type="text" placeholder="" name="title" maxlength="255">
+						</div>
+					</div>
+					<div class="field">
+					  <label class="label">Message</label>
+					  <div class="control">
+						<textarea class="textarea" placeholder="" name="content"></textarea>
+					  </div>
+					</div>
+					<div style="margin: 10px">
+						<button class="button is-link is-outlined is-fullwidth" id="publish-button">
+						  Publish post
+						</button>
+					</div>
+					<div class="field is-grouped is-grouped-centered">
+						<p id="warning_msg" class="help is-danger"></p>
+					</div>
+				</article>			 
+			</div>
+		  </div>
+		  <div class="tile is-parent is-vertical">
+			<section class="section" style="padding:0px;" id="posts-container">
+				
+			</section>
+		</div>
 		
-		$.ajax({
-			  type: "POST",
-			  url: 'service/posts',
-			  data: JSON.stringify({'title': $( "#submitPostForm" ).find( "input[name='title']" ).val(), content: $( "#submitPostForm" ).find( "textarea[name='content']" ).val() }),
-			  success: function( data ) {
-				  alert( "Data Loaded: " + data );
-				},
-				contentType: 'application/json',
-				dataType: 'json'
-			});
-	});
-
-</script>
-</body>
-
+    </div>
+  </section>
+  </body>
 </html>
+
