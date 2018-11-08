@@ -12,7 +12,7 @@ import com.piercevom.blog.api.validation.groups.PostAction;
 import com.piercevom.blog.api.validation.groups.PutAction;
 
 /**
- * Class representing a simple (blog's) post 
+ * Class representing a simple blog post.
  */
 @XmlRootElement(name = "Post")
 @JsonPropertyOrder({"id", "title", "content"})
@@ -35,6 +35,12 @@ public class PostDto {
 	public PostDto() {
 	}
 	
+	/**
+	 * 
+	 * @param id - Unique id
+	 * @param title - Post title
+	 * @param content - Post content
+	 */
 	public PostDto(String id, String title, String content) {
 		this.id = id;
 		this.title = title;

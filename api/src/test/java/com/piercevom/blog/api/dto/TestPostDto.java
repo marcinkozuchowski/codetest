@@ -39,6 +39,27 @@ public class TestPostDto {
 		assertNotEquals(post1, post2);
 	}
 	
+	@Test
+	public void test_PostDto_equality_5() {
+		PostDto post = new PostDto("1", "Title", "Content");
+		
+		assertEquals(post, post);
+	}
+	
+	@Test
+	public void test_PostDto_equality_6() {
+		PostDto post = new PostDto("1", "Title", "Content");
+		
+		assertNotEquals(post, new StringBuilder());
+	}
+	
+	@Test
+	public void test_PostDto_equality_7() {
+		PostDto post = new PostDto("1", "Title", "Content");
+		
+		assertNotEquals(post, null);
+	}
+	
 	/**
 	 * No error is a success
 	 */

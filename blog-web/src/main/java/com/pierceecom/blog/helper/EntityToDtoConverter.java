@@ -6,6 +6,12 @@ import java.util.List;
 import com.piercescom.blog.entitie.Post;
 import com.piercevom.blog.api.dto.PostDto;
 
+/**
+ * Converts entities to theirs DTO representations and reverse.
+ * 
+ * @author marcin.kozuchowski
+ *
+ */
 public class EntityToDtoConverter {
 
 	private EntityToDtoConverter () {

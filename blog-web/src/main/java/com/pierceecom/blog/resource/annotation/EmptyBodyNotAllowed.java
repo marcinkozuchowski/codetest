@@ -7,6 +7,11 @@ import java.lang.annotation.Target;
 
 import javax.ws.rs.NameBinding;
 
+/**
+ * Marks method or type that it requires non empty body. Otherwise 405 error code is thrown.
+ * @author marcin.kozuchowski
+ *
+ */
 @NameBinding
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = {ElementType.METHOD, ElementType.TYPE})

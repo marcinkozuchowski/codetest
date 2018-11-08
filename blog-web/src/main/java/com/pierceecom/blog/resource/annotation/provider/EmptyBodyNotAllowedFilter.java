@@ -13,6 +13,11 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.pierceecom.blog.resource.annotation.EmptyBodyNotAllowed;
 
+/**
+ * Filter that checks if request body is empty, if true then error code 405 is return to the client.
+ * @author marcin.kozuchowski
+ *
+ */
 @EmptyBodyNotAllowed
 @Provider
 @Priority(value = Priorities.ENTITY_CODER)

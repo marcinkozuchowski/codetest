@@ -6,7 +6,7 @@
 	<parent>
 		<artifactId>codetest</artifactId>
 		<groupId>com.pierceecom.sample</groupId>
-		<version>1.0-SNAPSHOT</version>
+		<version>1.1-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>integration-test</artifactId>
@@ -20,21 +20,15 @@
 				<version>${maven.failsafe.plugin.version}</version>
 				<executions>
 					<execution>
-						<id>integration-test</id>
 						<goals>
 							<goal>integration-test</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>verify</id>
-						<goals>
 							<goal>verify</goal>
 						</goals>
 					</execution>
 				</executions>
 				<configuration>
 					<includes>
-						<include>*.java</include>
+<!-- 						<include>*.java</include> -->
 					</includes>
 				</configuration>
 			</plugin>

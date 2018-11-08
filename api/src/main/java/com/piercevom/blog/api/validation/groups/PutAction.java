@@ -1,7 +1,7 @@
 package com.piercevom.blog.api.validation.groups;
 
 /**
- * Constraint group for PUT method.
+ * Constraint validation group for HTTP PUT method.
  * 
  * @author marcin.kozuchowski
  *

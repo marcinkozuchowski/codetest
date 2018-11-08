@@ -13,6 +13,12 @@ import javax.ws.rs.ext.Provider;
 
 import com.pierceecom.blog.resource.annotation.LogRestData;
 
+/**
+ * Logs all requests and responses data for methods marked with corresponding annotation.
+ * 
+ * @author marcin.kozuchowski
+ *
+ */
 @LogRestData
 @Provider
 public class RestLoggingFilter extends AbstractFilter implements ContainerRequestFilter, ContainerResponseFilter {

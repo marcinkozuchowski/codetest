@@ -10,7 +10,13 @@ import javax.ws.rs.container.ContainerRequestContext;
 import org.h2.util.IOUtils;
 
 public abstract class AbstractFilter {
-
+	
+	/**
+	 * Copy request's entity.
+	 * 
+	 * @param requestContext
+	 * @return
+	 */
 	protected String getEntityBody(ContainerRequestContext requestContext) {
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();

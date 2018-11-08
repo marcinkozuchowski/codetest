@@ -5,19 +5,33 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.piercescom.blog.entitie.EntityIntf;
 import com.piercescom.blog.entitie.service.Service;
 
-public abstract class AbstractService<T> implements Service<T> {
+/**
+ * Generic abstract class with generic methods providing common entity operations for subclasses.
+ * 
+ * @author marcin.kozuchowski
+ *
+ * @param <T> - entity class
+ */
+public abstract class AbstractService<T extends EntityIntf> implements Service<T> {
 
 	@PersistenceContext(unitName="pierce")
 	protected EntityManager em;
 	
+	/**
+	 * Entity class managed by subclass of this abstract.
+	 */
 	protected Class<T> clazz;
 	
-	protected AbstractService(Class<T> clazz) {
+	protected  AbstractService(Class<T> clazz) {
 		this.clazz = clazz;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public T findById(Object id) {
 		long t = System.currentTimeMillis();
@@ -28,6 +42,9 @@ public abstract class AbstractService<T> implements Service<T> {
 		}
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void save(T entity) {
 		long t = System.currentTimeMillis();
@@ -38,6 +55,9 @@ public abstract class AbstractService<T> implements Service<T> {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public T update(T entity) {
 		long t = System.currentTimeMillis();
@@ -48,6 +68,9 @@ public abstract class AbstractService<T> implements Service<T> {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void delete(T entity) {
 		long t = System.currentTimeMillis();

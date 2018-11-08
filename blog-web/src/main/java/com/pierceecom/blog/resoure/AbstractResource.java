@@ -6,7 +6,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
- * Some abstract stuff goes hire.
+ * Some abstract stuff goes here.
  * 
  * @author marcin.kozuchowski
  *

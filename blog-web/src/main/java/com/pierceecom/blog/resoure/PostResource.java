@@ -51,6 +51,9 @@ public class PostResource extends AbstractResource {
 	@Inject
 	private Validator validator;
 
+	/**
+	 * Returns all posts found in database.
+	 */
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response getAllPosts() {
@@ -60,6 +63,9 @@ public class PostResource extends AbstractResource {
 		return Response.ok(entity).build();
 	}
 
+	/**
+	 * Saves new post.
+	 */
 	@POST
 	@EmptyBodyNotAllowed
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -78,6 +84,9 @@ public class PostResource extends AbstractResource {
 		return Response.created(builder.build()).build();
 	}
 
+	/**
+	 * Updates post.
+	 */
 	@PUT
 	@EmptyBodyNotAllowed
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -101,6 +110,9 @@ public class PostResource extends AbstractResource {
 		return Response.created(builder.build()).build();
 	}
 	
+	/**
+	 * Returns post by id.
+	 */
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Path("{id}")
@@ -114,6 +126,9 @@ public class PostResource extends AbstractResource {
 		return Response.ok(EntityToDtoConverter.convertEntity(post)).build();
 	}
 
+	/**
+	 * Deletes post by id.
+	 */
 	@DELETE
 	@Path("{id}")
 	public Response deletePost(@PathParam("id") String id) {
@@ -128,6 +143,12 @@ public class PostResource extends AbstractResource {
 		return Response.ok().build();
 	}
 
+	/**
+	 * Validates post for POST and PUT operation.
+	 * @param post - post to validate
+	 * @param constraitGroup - validation group
+	 * @return - TRUE is post data are valid, FALSE otherwise.
+	 */
 	@SuppressWarnings("rawtypes")
 	public boolean validatePost(PostDto post, Class ... constraitGroup) {
 		Set<ConstraintViolation<PostDto>> constraintViolations;
@@ -135,7 +156,7 @@ public class PostResource extends AbstractResource {
 			return true;
 		} 
 		
-		// TODO: Same error class with validation message could be returned to REST CLIENT but provided RAML does not requires that.
+		// TODO: Same error class with validation message could be returned to REST CLIENT, but provided RAML does not requires that at this moment.
 		constraintViolations.forEach(c -> LOGGER.warning(() -> c.getPropertyPath() + " " + c.getInvalidValue() + " - " + c.getMessage()));
 
 		return false;

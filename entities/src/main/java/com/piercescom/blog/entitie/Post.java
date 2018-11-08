@@ -8,18 +8,32 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+/**
+ * Entity class of post.
+ * @author marcin.kozuchowski
+ *
+ */
 @Entity
 @Table(schema = "blog")
 @SequenceGenerator(name="post_sequence", schema = "blog", sequenceName = "post_id_seq", allocationSize = 1)
-public class Post {
+public class Post implements EntityIntf {
 
+	/**
+	 * Post unique id.
+	 */
 	@Id
 	@GeneratedValue(generator = "post_sequence", strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
+	/**
+	 * Post title.
+	 */
 	@Column(nullable = false)
 	private String title;
 	
+	/**
+	 * Post content.
+	 */
 	@Column(nullable = false, columnDefinition="text")
 	private String content;
 

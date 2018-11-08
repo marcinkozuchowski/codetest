@@ -1,7 +1,7 @@
 package com.piercevom.blog.api.validation.groups;
 
 /**
- * Constraint group for Post method.
+ * Constraint validation group for HTTP POST method.
  * 
  * @author marcin.kozuchowski
  *
