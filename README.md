@@ -4,7 +4,7 @@
 2. Run server:
 	> java -jar  payara-micro-5.183.jar --deploy ${projectHomeDir}/blog-web/target/blog-web.war --logproperties ${projectHomeDir}/etc/logging.properties
 3. Run tests:
-	> mvn verify -Did.test=*
+	> mvn verify -Dit.test=*
 4. Checkout blog page
 	> http://localhost:8080/index.jsp
 	
